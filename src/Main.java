@@ -1,6 +1,4 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
 public class Main {
 
@@ -146,6 +144,81 @@ public class Main {
             System.out.println("\nProgrammet fortsætter her!");
             */
 
-}
+            /* Opgave 4 - Finally klausul og information fra undtagelsesobjekter
+
+            --- Teori ---
+            Finally blokken udføres altid, uanset om der opstår en undtagelse eller ej.
+            Undtagelsesobjekter kan give detaljeret information om undtagelsen.
+
+            --- Hvad er formålet med finally blokken? ---
+            Formålet med finally blokken er at garantere, at en bestem kodeblok bliver udført.
+            Også selvom der skulle opstå en udtagelse(fejl) i den tilhørende try-blok, eller kørere fejlfrit.
+
+            Dens brug:
+            - Oprydningsopgaver der lukker filer
+            - Frigive ressourcer for at forhindre hukommelseslækage
+
+            --- Eksempel: Brug finally blokken for at sikre at en ressource altid frigives ---
 
 
+            public static void main(String[] args) {
+                BufferedReader reader = null;
+                String filename = "src/data.txt"; // Korrekt relativ sti
+
+                // Tjek om filen findes, og opret den hvis ikke
+                File file = new File(filename);
+                if (!file.exists()) {
+                    try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+                        writer.write("Hej verden!");
+                        writer.newLine();
+                        writer.write("Dette er en testfil.");
+                        System.out.println("Filen blev oprettet, da den ikke fandtes.");
+                    } catch (IOException e) {
+                        System.out.println("Kunne ikke oprette filen: " + e.getMessage());
+                        return; // Stop programmet hvis filen ikke kan oprettes
+                    }
+                }
+
+                // Læs filen med finally for at frigive ressourcen
+                try {
+                    reader = new BufferedReader(new FileReader(filename));
+                    String line = reader.readLine();
+                    System.out.println("Første linje: " + line);
+
+                } catch (IOException e) {
+                    System.out.println("Fejl ved læsning af filen: " + e.getMessage());
+
+                } finally {
+                    try {
+                        if (reader != null) {
+                            reader.close();
+                            System.out.println("Filen blev lukket korrekt.");
+                        }
+                    } catch (IOException e) {
+                        System.out.println("Kunne ikke lukke filen: " + e.getMessage());
+                    }
+                }
+
+                System.out.println("Programmet fortsætter her!"); }
+            */
+
+            /* Opgave 5 - Brugerdefinerede Undtagelsesklasser
+
+            --- Teori ---
+            Brugerdefinerede undtagelser kan oprettes ved at extends Exception klassen.
+            De bruges til at repræsentere specifikke fejltilstande i applikationen.
+
+            --- Hvorfor opretter man brugerdefinerede undtagelser? ---
+            For at specificere fejl, som standard-undtagelser ikke dækker
+            For at gøre koden mere læsbar og forståelig
+            For at skille forskellige fejltyper ad (fx “ulovligt brugernavn” vs. “negativ saldo”)
+            For at tvinge kaldende metoder til at håndtere specifikke situationer
+            For at give mere meningsfulde fejlbeskeder til brugeren
+
+
+            --- Hvordan opretter man brugerdefinerede undtagelser? ---
+
+
+
+             */
+        }
